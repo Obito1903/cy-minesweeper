@@ -1,0 +1,6 @@
+.vscode
+Docs/Doxygen
+*.o
+*.out
+*.zip
+bin/*
