@@ -21,20 +21,19 @@
 typedef enum
 {
 	/*! La case contient une bombe */
-	BOMBE = -1;
+	BOMBE = -1,
 	/*! La case n'a pas de bombe */
-	VIDE = 0;
+	VIDE = 0,
 	/*! La case contient un nombre (Nombre de bombe autour de cette case) */
-	1,
-	2,
-	3,
-	4,
-	5,
-	6,
-	7,
-	8;
-}
-contenuCase;
+	NB1 = 1,
+	NB2 = 2,
+	NB3 = 3,
+	NB4 = 4,
+	NB5 = 5,
+	NB6 = 6,
+	NB7 = 7,
+	NB8 = 8
+} contenuCase;
 
 /**
  * @enum etatCase
@@ -43,13 +42,12 @@ contenuCase;
 typedef enum
 {
 	/*! Case caché */
-	CACHE = 0;
+	CACHE = 0,
 	/*! Case découverte */
-	DECOUVERTE = 1;
+	DECOUVERTE = 1,
 	/*! Case marquée */
-	DRAPEAU = -1;
-}
-etatCase;
+	DRAPEAU = -1
+} etatCase;
 
 /**
  * @struct casePlateau
@@ -73,7 +71,7 @@ typedef struct
  * ~~~~~~~~~~~~~~~~~~~~~
  * Les coordonnées commencent dans le coin en haut à gauche du plateau:
  *
- * |   | 0 | 1 | 2 | 3 |
+ * |y/x| 0 | 1 | 2 | 3 |
  * |:-:|:-:|:-:|:-:|:-:|
  * | 0 |   |   |   |   |
  * | 1 |   |   |   |   |
@@ -91,9 +89,9 @@ typedef struct
 	 */
 	casePlateau **cases;
 	/*! Nombre de ligne du plateau */
-	int nbLigne;
+	int nbLignes;
 	/*! Nombre de colonne du plateau */
-	int nbColonne;
+	int nbColonnes;
 } plateauDemineur;
 
 #endif // __DEMINEUR_H__
