@@ -56,6 +56,3 @@ give: all $(EXTRA) $(DOCS)
 	$(CP) -r --parents $(SRC_FOLDER) $(DOCS) $(EXTRA) $(ZIP_TMP_FOLDER)/$(ZIP_NAME)
 	cd $(ZIP_TMP_FOLDER) && zip -r $(PWD)/$(ZIP_NAME) $(ZIP_NAME)
 	rm -rf $(ZIP_TMP_FOLDER)
-
-cesar: all
-	./$(OUT) -x cesar
