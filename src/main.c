@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
 
 	plateauDemineur plateau;
 	plateau.nbLignes   = 3;
-	plateau.nbColonnes = 10;
+	plateau.nbColonnes = 3;
 	int starty		   = (LINES - plateau.nbLignes) / 2;  /* Calculating for a center placement */
 	int startx		   = (COLS - plateau.nbColonnes) / 2; /* of the window		*/
 	int ch;

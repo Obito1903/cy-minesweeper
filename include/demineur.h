@@ -35,19 +35,25 @@ typedef enum
 	NB8 = 8
 } contenuCase;
 
+const char contenuCaseChar[10] = {'X', ' ', '1', '2', '3', '4', '5', '6', '7', '8'};
+#define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[CONTENU + 1]
+
 /**
  * @enum etatCase
  * Etat d'une case
  */
 typedef enum
 {
+	/*! Case marquée */
+	DRAPEAU = -1,
 	/*! Case caché */
 	CACHE = 0,
 	/*! Case découverte */
-	DECOUVERTE = 1,
-	/*! Case marquée */
-	DRAPEAU = -1
+	DECOUVERTE = 1
 } etatCase;
+
+const char etatCaseChar[3] = {'^', '~', ''};
+#define etat_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
 /**
  * @struct casePlateau
@@ -92,6 +98,7 @@ typedef struct
 	int nbLignes;
 	/*! Nombre de colonne du plateau */
 	int nbColonnes;
+	int nbMines;
 } plateauDemineur;
 
 #endif // __DEMINEUR_H__

@@ -13,10 +13,10 @@ WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y)
 {
 	WINDOW *winPlateau; // Variable de retour
 
-	winPlateau = newwin(plateau->nbLignes + 2, plateau->nbColonnes + 2, i_y, i_x);
+	winPlateau = newwin(plateau->nbLignes + 4, plateau->nbColonnes + 2, i_y, i_x);
 	box(winPlateau, 0, 0);
 
-	mvwhline(winPlateau, 2, 0, ACS_HLINE, plateau->nbColonnes + 2);
+	mvwhline(winPlateau, 2, 1, 0, plateau->nbColonnes);
 
 	wrefresh(winPlateau);
 	return (winPlateau);
@@ -28,3 +28,17 @@ void detruitWinPlateau(WINDOW *winPlateau)
 	wrefresh(winPlateau);
 	delwin(winPlateau);
 }
+
+/**
+ *  @fn void updateFenetrePlateau (WINDOW *winPlateau, plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Wed 22 Dec 2021 20:42
+ *
+ *  @brief
+ *
+ *  @param[in]
+ *
+ */
+void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau)
+{}
