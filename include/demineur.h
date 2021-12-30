@@ -38,9 +38,6 @@ typedef enum
 	NB8 = 8
 } contenuCase;
 
-extern const cchar_t contenuCaseChar[10];
-#define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[(int)CONTENU + 1]
-
 /**
  * @enum etatCase
  * Etat d'une case
@@ -54,9 +51,6 @@ typedef enum
 	/*! Case découverte */
 	DECOUVERTE = 1
 } etatCase;
-
-extern const cchar_t etatCaseChar[3];
-#define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
 /**
  * @struct casePlateau

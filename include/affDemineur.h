@@ -19,7 +19,36 @@
 #include "demineur.h"
 #include "samLib.h"
 
-#define ERREUR_SET_LOCALE -22
+#define ERREUR_SET_LOCALE	-22
+#define ERREUR_INIT_COULEUR 23
+
+extern const cchar_t contenuCaseChar[10];
+#define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[(int)CONTENU + 1]
+
+/**
+ * @enum couleurContenu
+ * Enumeration des couleurs pour le contenu des cases
+ */
+typedef enum
+{
+	/*!  */
+	COULEUR_BOMBE = 10,
+	COULEUR_VIDE,
+	COULEUR_NB1,
+	COULEUR_NB2,
+	COULEUR_NB3,
+	COULEUR_NB4,
+	COULEUR_NB5,
+	COULEUR_NB6,
+	COULEUR_NB7,
+	COULEUR_NB8,
+	COULEUR_DRAPEAU,
+	COULEUR_CACHE,
+
+} couleurDemineur;
+
+extern const cchar_t etatCaseChar[3];
+#define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
 /**
  *  @fn void initAffichage (void)

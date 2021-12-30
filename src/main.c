@@ -38,7 +38,19 @@ int main(int argc, char const *argv[])
 	plateau->cases[2][0].etat	 = DECOUVERTE;
 	plateau->cases[2][0].contenu = NB1;
 	plateau->cases[3][0].etat	 = DECOUVERTE;
-	plateau->cases[0][1].contenu = VIDE;
+	plateau->cases[3][0].contenu = NB2;
+	plateau->cases[0][1].etat	 = DECOUVERTE;
+	plateau->cases[0][1].contenu = NB3;
+	plateau->cases[1][1].etat	 = DECOUVERTE;
+	plateau->cases[1][1].contenu = NB4;
+	plateau->cases[2][1].etat	 = DECOUVERTE;
+	plateau->cases[2][1].contenu = NB5;
+	plateau->cases[3][1].etat	 = DECOUVERTE;
+	plateau->cases[3][1].contenu = NB6;
+	plateau->cases[0][2].etat	 = DECOUVERTE;
+	plateau->cases[0][2].contenu = NB7;
+	plateau->cases[1][2].etat	 = DECOUVERTE;
+	plateau->cases[1][2].contenu = NB8;
 
 	printw("Press F1 to exit");
 	refresh();

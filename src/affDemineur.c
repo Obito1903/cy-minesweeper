@@ -9,26 +9,69 @@
 
 #include "affDemineur.h"
 
+const cchar_t contenuCaseChar[10] = {
+	(cchar_t){.attr = A_NORMAL, .chars = {L'💣'}, .ext_color = COULEUR_BOMBE},
+	(cchar_t){.attr = A_NORMAL, .chars = {L' '}, .ext_color = COLOR_WHITE},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'1'}, .ext_color = COULEUR_NB1},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'2'}, .ext_color = COULEUR_NB2},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'3'}, .ext_color = COULEUR_NB3},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'4'}, .ext_color = COULEUR_NB4},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'5'}, .ext_color = COULEUR_NB5},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'6'}, .ext_color = COULEUR_NB6},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'7'}, .ext_color = COULEUR_NB7},
+	(cchar_t){.attr = A_NORMAL, .chars = {L'8'}, .ext_color = COULEUR_NB8},
+};
+const cchar_t etatCaseChar[3] = {(cchar_t){.attr = A_NORMAL, .chars = {L'⚑'}, .ext_color = COULEUR_DRAPEAU},
+								 (cchar_t){.attr = A_NORMAL, .chars = {L'~'}, .ext_color = COULEUR_CACHE},
+								 (cchar_t){.attr = A_NORMAL, .chars = {L' '}, .ext_color = COLOR_WHITE}};
+
 void initAffichage(void)
 {
 	initscr();
 
-	cbreak();			  /* Line buffering disabled, Pass on
-						   * everty thing to me 		*/
-	keypad(stdscr, TRUE); /* I need that nifty F1 	*/
+	cbreak();
+	keypad(stdscr, TRUE);
 	CHECK_PRINT_ERR(setlocale(LC_CTYPE, "") == NULL, ERREUR_SET_LOCALE, "Impossible de changer le format des caractères.");
-	initCouleurs();
+	CHECK_PRINT_ERR(has_colors() == FALSE, ERREUR_INIT_COULEUR, "Le terminal ne supporte pas les couleurs.");
+	if (has_colors() == TRUE) {
+		initCouleurs();
+	}
 }
 
 void initCouleurs(void)
 {
+	int error = OK;
 	start_color();
-	init_color(10, 500, 0, 500);
+	error = init_color(COULEUR_BOMBE, 800, 0, 0);
+	error = init_color(COULEUR_VIDE, 0, 0, 0);
+	error = init_color(COULEUR_NB1, 423, 1000, 113);
+	error = init_color(COULEUR_NB2, 298, 917, 380);
+	error = init_color(COULEUR_NB3, 188, 854, 612);
+	error = init_color(COULEUR_NB4, 78, 788, 839);
+	error = init_color(COULEUR_NB5, 180, 607, 820);
+	error = init_color(COULEUR_NB6, 458, 400, 541);
+	error = init_color(COULEUR_NB7, 760, 176, 239);
+	error = init_color(COULEUR_NB8, 1000, 0, 0);
+	error = init_color(COULEUR_DRAPEAU, 1000, 1000, 1000);
+	error = init_color(COULEUR_CACHE, 1000, 1000, 1000);
 
-	init_pair(BOMBE, COLOR_YELLOW, COLOR_GREEN);
-	init_pair(VIDE, COLOR_CYAN, COLOR_BLUE);
-	init_pair(NB1, 10, COLOR_BLACK);
-	init_pair(NB2, COLOR_RED, COLOR_MAGENTA);
+	CHECK_PRINT_ERR(error == ERR, ERREUR_INIT_COULEUR, "Impossible d'initialiser une ou plusieurs couleurs.");
+	error = OK;
+
+	error = init_pair(COULEUR_NB1, COULEUR_NB1, 0);
+	error = init_pair(COULEUR_NB2, COULEUR_NB2, 0);
+	error = init_pair(COULEUR_NB3, COULEUR_NB3, 0);
+	error = init_pair(COULEUR_NB4, COULEUR_NB4, 0);
+	error = init_pair(COULEUR_NB5, COULEUR_NB5, 0);
+	error = init_pair(COULEUR_NB6, COULEUR_NB6, 0);
+	error = init_pair(COULEUR_NB7, COULEUR_NB7, 0);
+	error = init_pair(COULEUR_NB8, COULEUR_NB8, 0);
+	error = init_pair(COULEUR_BOMBE, COULEUR_BOMBE, 0);
+	error = init_pair(COULEUR_VIDE, COULEUR_VIDE, 0);
+	error = init_pair(COULEUR_DRAPEAU, COULEUR_DRAPEAU, 0);
+	error = init_pair(COULEUR_CACHE, COULEUR_CACHE, 0);
+
+	CHECK_PRINT_ERR(error == ERR, ERREUR_INIT_COULEUR, "Impossible d'initialiser une ou plusieurs paires de couleurs.");
 }
 
 WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y)
