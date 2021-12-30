@@ -20,7 +20,7 @@ build:
     - make all
   artifacts:
     paths:
-      - bin/tp8
+      - bin/tp9
       # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
       # cache:
       #   paths:
