@@ -8,6 +8,7 @@
  */
 
 #include <affDemineur.h>
+#include <logicDemineur.h>
 
 /**
  *
@@ -25,43 +26,26 @@
  */
 int main(int argc, char const *argv[])
 {
-	initscr();
+	initAffichage();
 
-	cbreak();			  /* Line buffering disabled, Pass on
-						   * everty thing to me 		*/
-	keypad(stdscr, TRUE); /* I need that nifty F1 	*/
-
-	plateauDemineur plateau;
-	plateau.nbLignes   = 3;
-	plateau.nbColonnes = 3;
-	int starty		   = (LINES - plateau.nbLignes) / 2;  /* Calculating for a center placement */
-	int startx		   = (COLS - plateau.nbColonnes) / 2; /* of the window		*/
-	int ch;
+	plateauDemineur *plateau = initPlateauDemineur(4, 4, 10);
+	int				 starty	 = (LINES - plateau->nbLignes) / 2;	 /* Calculating for a center placement */
+	int				 startx	 = (COLS - plateau->nbColonnes) / 2; /* of the window		*/
+	int				 ch;
+	plateau->cases[0][0].etat	 = DRAPEAU;
+	plateau->cases[1][0].etat	 = DECOUVERTE;
+	plateau->cases[1][0].contenu = BOMBE;
+	plateau->cases[2][0].etat	 = DECOUVERTE;
+	plateau->cases[2][0].contenu = NB1;
+	plateau->cases[3][0].etat	 = DECOUVERTE;
+	plateau->cases[0][1].contenu = VIDE;
 
 	printw("Press F1 to exit");
 	refresh();
-	WINDOW *my_win = creeWinPlateau(&plateau, startx, starty);
+	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);
 
-	while ((ch = getch()) != KEY_F(1)) {
-		switch (ch) {
-			case KEY_LEFT:
-				detruitWinPlateau(my_win);
-				my_win = creeWinPlateau(&plateau, --startx, starty);
-				break;
-			case KEY_RIGHT:
-				detruitWinPlateau(my_win);
-				my_win = creeWinPlateau(&plateau, ++startx, starty);
-				break;
-			case KEY_UP:
-				detruitWinPlateau(my_win);
-				my_win = creeWinPlateau(&plateau, startx, --starty);
-				break;
-			case KEY_DOWN:
-				detruitWinPlateau(my_win);
-				my_win = creeWinPlateau(&plateau, startx, ++starty);
-				break;
-		}
-	}
+	updateFenetrePlateau(my_win, plateau);
+	getchar();
 
 	endwin();
 	return (0);

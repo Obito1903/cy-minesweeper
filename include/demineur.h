@@ -14,6 +14,9 @@
  */
 #define __DEMINEUR_H__
 
+#include <ncurses.h>
+#include <stddef.h>
+
 /**
  * @enum contenuCase
  * @brief Enumération des différents contenus possibles d'une case
@@ -35,8 +38,8 @@ typedef enum
 	NB8 = 8
 } contenuCase;
 
-const char contenuCaseChar[10] = {'X', ' ', '1', '2', '3', '4', '5', '6', '7', '8'};
-#define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[CONTENU + 1]
+extern const cchar_t contenuCaseChar[10];
+#define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[(int)CONTENU + 1]
 
 /**
  * @enum etatCase
@@ -52,8 +55,8 @@ typedef enum
 	DECOUVERTE = 1
 } etatCase;
 
-const char etatCaseChar[3] = {'^', '~', ''};
-#define etat_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
+extern const cchar_t etatCaseChar[3];
+#define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
 /**
  * @struct casePlateau

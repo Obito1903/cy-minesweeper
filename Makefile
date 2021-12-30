@@ -11,10 +11,10 @@ ZIP_NAME = ${USER}-$(shell basename $$PWD)
 CP   = cp -u
 CC	 = gcc
 FLAGS	 = -g -c -Wall -Iinclude
-LFLAGS	 = -lncurses
+LFLAGS	 = -lncursesw
 
-FEATURES =
-FEATURES_CC = #$(shell echo $(FEATURES) | sed 's/[^ ]* */-D&/g')
+FEATURES = NCURSES_WIDECHAR=1 _XOPEN_SOURCE=700
+FEATURES_CC = $(shell echo $(FEATURES) | sed 's/[^ ]* */-D&/g')
 
 # Variable specifique a la compilation
 SOURCES	= $(wildcard $(SRC_FOLDER)/*.c)
@@ -27,7 +27,7 @@ all: $(BUILD_FOLDER) $(BIN_FOLDER) $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
 $(BUILD_FOLDER)/%.o: $(SRC_FOLDER)/%.c
-	$(CC) $(FLAGS) $(FEATURES_CC) $^ -o $@
+	$(CC) $(FLAGS) $(FEATURES_CC) $^ -o $@ $(LFLAGS)
 
 $(BUILD_FOLDER):
 	mkdir -p $(BUILD_FOLDER)

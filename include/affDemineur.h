@@ -14,8 +14,34 @@
  */
 #define __AFFDEMINEUR_H__
 
-#include "demineur.h"
 #include <ncurses.h>
+#include <locale.h>
+#include "demineur.h"
+#include "samLib.h"
+
+#define ERREUR_SET_LOCALE -22
+
+/**
+ *  @fn void initAffichage (void)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Thu 30 Dec 2021 00:10
+ *
+ *  @brief Initialise l'affichage et prepare le terminal pour ncurses
+ *
+ */
+void initAffichage(void);
+
+/**
+ *  @fn void initCouleurs (void)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Thu 30 Dec 2021 02:24
+ *
+ *  @brief Initialise l'affichage en couleur
+ *
+ */
+void initCouleurs(void);
 
 /**
  *  @fn WINDOW* creeWinPlateau (plateauDemineur *plateau, int i_x,i_y)
@@ -45,5 +71,19 @@ WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y);
  *
  */
 void detruitWinPlateau(WINDOW *winPlateau);
+
+/**
+ *  @fn void updateFenetrePlateau (WINDOW *winPlateau, plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Wed 22 Dec 2021 20:42
+ *
+ *  @brief Met à jour la fenêtre du plateau de jeu
+ *
+ *  @param[in out] winPlateau : Fenêtre du plateau de jeu
+ *  @param[in] plateau : Plateau de jeu
+ *
+ */
+void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau);
 
 #endif // __AFFDEMINEUR_H__
