@@ -8,9 +8,10 @@
  */
 
 #ifndef __AFFDEMINEUR_H__
+
 /**
- *  @def __AFFDEMINEUR_H__
- *  Constante permettant de savoirs si le fichier à déjà été chargé.
+ * @def \_\_AFFDEMINEUR_H\_\_
+ * Constante permettant de savoirs si le fichier à déjà été chargé.
  */
 #define __AFFDEMINEUR_H__
 
@@ -19,21 +20,52 @@
 #include "demineur.h"
 #include "samLib.h"
 
-#define ERREUR_SET_LOCALE	-22
+/**
+ * @def ERREUR_SET_LOCALE
+ * Code d'erreur en case de problème lors de la définition de la locale.
+ */
+#define ERREUR_SET_LOCALE -22
+
+/**
+ * @def ERREUR_INIT_COULEUR
+ *  Code d'erreur en cas de problème lors de l'initialisation des couleurs.
+ */
 #define ERREUR_INIT_COULEUR 23
 
+/**
+ * @brief Tableau contenant les caractères associés aux différents contenus d'une case
+ */
 extern const cchar_t contenuCaseChar[10];
+
+/**
+ * @def CONTENU_CASE_CHAR(CONTENU)
+ * Macro permettant de récupérer le le caractères associé a une case en fonction de son contenu.
+ */
 #define CONTENU_CASE_CHAR(CONTENU) contenuCaseChar[(int)CONTENU + 1]
 
 /**
- * @enum couleurContenu
+ * @brief Tableau contenant les couleurs associés aux différents états d'une case
+ *
+ */
+extern const cchar_t etatCaseChar[3];
+
+/**
+ * @def ETAT_CASE_CHAR(CONTENU)
+ * Macro permettant de récupérer le le caractères associé a une case en fonction de son état.
+ */
+#define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
+
+/**
+ * @enum couleurDemineur
  * Enumeration des couleurs pour le contenu des cases
  */
 typedef enum
 {
-	/*!  */
+	/*! Couleurs d'une bombe */
 	COULEUR_BOMBE = 10,
+	/*! Couleurs d'une case vide */
 	COULEUR_VIDE,
+	/*! Couleurs d'une case entouré de bombe */
 	COULEUR_NB1,
 	COULEUR_NB2,
 	COULEUR_NB3,
@@ -46,9 +78,6 @@ typedef enum
 	COULEUR_CACHE,
 
 } couleurDemineur;
-
-extern const cchar_t etatCaseChar[3];
-#define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
 /**
  *  @fn void initAffichage (void)
@@ -73,7 +102,7 @@ void initAffichage(void);
 void initCouleurs(void);
 
 /**
- *  @fn WINDOW* creeWinPlateau (plateauDemineur *plateau, int i_x,i_y)
+ *  @fn WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y)
  *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
  *  @version 0.1
  *  @date Tue 21 Dec 2021 19:22

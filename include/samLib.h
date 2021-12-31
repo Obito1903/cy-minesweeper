@@ -9,7 +9,7 @@
 
 #ifndef __SAMLIB_H__
 /**
- *  @def __SAMLIB_H__
+ *  @def \_\_SAMLIB_H\_\_
  *  Constante permettant de savoirs si le fichier à déjà été chargé.
  */
 #define __SAMLIB_H__

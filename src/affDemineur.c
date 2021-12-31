@@ -96,7 +96,6 @@ void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau)
 {
 
 	wmove(winPlateau, 1, 2);
-	// mvwadd_wch(winPlateau, 2, 2, WACS_BLOCK);
 
 	int iter_Colonne;
 	for (iter_Colonne = 0; iter_Colonne < plateau->nbColonnes; iter_Colonne++) {

@@ -9,7 +9,7 @@
 
 #ifndef __DEMINEUR_H__
 /**
- *  @def __DEMINEUR_H__
+ *  @def \_\_DEMINEUR_H\_\_
  *  Constante permettant de savoirs si le fichier à déjà été chargé.
  */
 #define __DEMINEUR_H__
@@ -95,6 +95,7 @@ typedef struct
 	int nbLignes;
 	/*! Nombre de colonne du plateau */
 	int nbColonnes;
+	/*! Nombre de bombes sur le plateau */
 	int nbMines;
 } plateauDemineur;
 
