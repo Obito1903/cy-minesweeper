@@ -65,12 +65,15 @@ plateauDemineur *initPlateauDemineur(int i_nbLignes, int i_nbColonnes, int i_nbM
 	int				 i_iteColonne;
 	int				 i_iterLigne;
 
-	plateau				= (plateauDemineur *)malloc(sizeof(plateauDemineur));
-	plateau->nbLignes	= i_nbLignes;
-	plateau->nbColonnes = i_nbColonnes;
-	plateau->nbMines	= i_nbMines;
-	plateau->nbDrapeaux = 0;
-	plateau->xRay		= FALSE;
+	plateau						= (plateauDemineur *)malloc(sizeof(plateauDemineur));
+	plateau->nbLignes			= i_nbLignes;
+	plateau->nbColonnes			= i_nbColonnes;
+	plateau->nbMines			= i_nbMines;
+	plateau->nbDrapeaux			= 0;
+	plateau->xRay				= FALSE;
+	plateau->posCurseur.affiche = TRUE;
+	plateau->posCurseur.x		= 1;
+	plateau->posCurseur.y		= 2;
 
 	plateau->cases = (casePlateau **)malloc(sizeof(casePlateau *) * i_nbColonnes);
 	CHECK_PRINT_ERR(plateau->cases == NULL, ERREUR_ALLOCATION_MEMOIRE, "Erreur d'allocation mémoire");
@@ -96,4 +99,23 @@ void freePlateauDemineur(plateauDemineur *plateau)
 	}
 	free(plateau->cases);
 	free(plateau);
+}
+
+void decourvreCase(plateauDemineur *plateau, int posX, int posY)
+{
+	int i_vectX;
+	int i_vectY;
+	if ((plateau->cases[posX][posY].etat != DECOUVERTE)) {
+		plateau->cases[posX][posY].etat = DECOUVERTE;
+		if (plateau->cases[posX][posY].contenu == VIDE) {
+			for (i_vectX = -1; i_vectX <= 1; i_vectX++) {
+				for (i_vectY = -1; i_vectY <= 1; i_vectY++) {
+					if ((posX + i_vectX >= 0) && (posX + i_vectX < plateau->nbColonnes) && (posY + i_vectY >= 0) &&
+						(posY + i_vectY < plateau->nbLignes) && (i_vectX != 0 || i_vectY != 0)) {
+						decourvreCase(plateau, posX + i_vectX, posY + i_vectY);
+					}
+				}
+			}
+		}
+	}
 }

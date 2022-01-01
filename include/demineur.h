@@ -65,6 +65,20 @@ typedef struct
 } casePlateau;
 
 /**
+ * @struct curseur
+ * Structure représentant un curseur
+ */
+typedef struct
+{
+	/*! Positin en X du curseur */
+	int x;
+	/*! Position en Y du curseur */
+	int y;
+	/*! Etat du curseur */
+	int affiche;
+} curseur;
+
+/**
  * @struct plateauDemineur
  * @brief Strucure contenant les informations du plateau de jeu
  *
@@ -101,6 +115,8 @@ typedef struct
 	int nbDrapeaux;
 	/*! XRay Découvre le plateau*/
 	int xRay;
+	/*! Position du curseur */
+	curseur posCurseur;
 } plateauDemineur;
 
 #endif // __DEMINEUR_H__

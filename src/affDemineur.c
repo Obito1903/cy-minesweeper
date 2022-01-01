@@ -10,16 +10,16 @@
 #include "affDemineur.h"
 
 const cchar_t contenuCaseChar[10] = {
-	(cchar_t){.attr = A_NORMAL, .chars = {L'💣'}, .ext_color = COULEUR_BOMBE},
-	(cchar_t){.attr = A_NORMAL, .chars = {L' '}, .ext_color = COLOR_WHITE},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'1'}, .ext_color = COULEUR_NB1},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'2'}, .ext_color = COULEUR_NB2},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'3'}, .ext_color = COULEUR_NB3},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'4'}, .ext_color = COULEUR_NB4},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'5'}, .ext_color = COULEUR_NB5},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'6'}, .ext_color = COULEUR_NB6},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'7'}, .ext_color = COULEUR_NB7},
-	(cchar_t){.attr = A_NORMAL, .chars = {L'8'}, .ext_color = COULEUR_NB8},
+	(cchar_t){.attr = 0, .chars = {L'💣'}, .ext_color = COULEUR_BOMBE},
+	(cchar_t){.attr = 0, .chars = {L' '}, .ext_color = COLOR_WHITE},
+	(cchar_t){.attr = 0, .chars = {L'1'}, .ext_color = COULEUR_NB1},
+	(cchar_t){.attr = 0, .chars = {L'2'}, .ext_color = COULEUR_NB2},
+	(cchar_t){.attr = 0, .chars = {L'3'}, .ext_color = COULEUR_NB3},
+	(cchar_t){.attr = 0, .chars = {L'4'}, .ext_color = COULEUR_NB4},
+	(cchar_t){.attr = 0, .chars = {L'5'}, .ext_color = COULEUR_NB5},
+	(cchar_t){.attr = 0, .chars = {L'6'}, .ext_color = COULEUR_NB6},
+	(cchar_t){.attr = 0, .chars = {L'7'}, .ext_color = COULEUR_NB7},
+	(cchar_t){.attr = 0, .chars = {L'8'}, .ext_color = COULEUR_NB8},
 };
 const cchar_t etatCaseChar[3] = {(cchar_t){.attr = A_NORMAL, .chars = {L'⚑'}, .ext_color = COULEUR_DRAPEAU},
 								 (cchar_t){.attr = A_NORMAL, .chars = {L'~'}, .ext_color = COULEUR_CACHE},
@@ -29,6 +29,7 @@ void initAffichage(void)
 {
 	initscr();
 
+	noecho();
 	cbreak();
 	keypad(stdscr, TRUE);
 	CHECK_PRINT_ERR(setlocale(LC_CTYPE, "") == NULL, ERREUR_SET_LOCALE, "Impossible de changer le format des caractères.");
@@ -54,6 +55,7 @@ void initCouleurs(void)
 	error = init_color(COULEUR_NB8, 1000, 0, 0);
 	error = init_color(COULEUR_DRAPEAU, 1000, 1000, 1000);
 	error = init_color(COULEUR_CACHE, 1000, 1000, 1000);
+	error = init_color(COULEUR_CURSEUR, 1000, 1000, 1000);
 
 	CHECK_PRINT_ERR(error == ERR, ERREUR_INIT_COULEUR, "Impossible d'initialiser une ou plusieurs couleurs.");
 	error = OK;
@@ -70,6 +72,7 @@ void initCouleurs(void)
 	error = init_pair(COULEUR_VIDE, COULEUR_VIDE, 0);
 	error = init_pair(COULEUR_DRAPEAU, COULEUR_DRAPEAU, 0);
 	error = init_pair(COULEUR_CACHE, COULEUR_CACHE, 0);
+	error = init_pair(COULEUR_CURSEUR, COULEUR_CURSEUR, 0);
 
 	CHECK_PRINT_ERR(error == ERR, ERREUR_INIT_COULEUR, "Impossible d'initialiser une ou plusieurs paires de couleurs.");
 }
@@ -80,7 +83,7 @@ WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y)
 
 	winPlateau = newwin(plateau->nbLignes + 2, (plateau->nbColonnes * 2) + 3, i_y, i_x);
 	box(winPlateau, 0, 0);
-
+	keypad(winPlateau, TRUE);
 	wrefresh(winPlateau);
 	return (winPlateau);
 }
@@ -101,7 +104,10 @@ void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau)
 	for (iter_Colonne = 0; iter_Colonne < plateau->nbColonnes; iter_Colonne++) {
 		int iter_Ligne;
 		for (iter_Ligne = 0; iter_Ligne < plateau->nbLignes; iter_Ligne++) {
-			if ((plateau->cases[iter_Colonne][iter_Ligne].etat == DECOUVERTE) || (plateau->xRay == TRUE)) {
+			if ((plateau->posCurseur.x == iter_Colonne) && (plateau->posCurseur.y == iter_Ligne) &&
+				(plateau->posCurseur.affiche == TRUE)) {
+				mvwadd_wch(winPlateau, iter_Ligne + 1, (iter_Colonne * 2) + 2, &CURSEUR);
+			} else if ((plateau->cases[iter_Colonne][iter_Ligne].etat == DECOUVERTE) || (plateau->xRay == TRUE)) {
 				mvwadd_wch(winPlateau, iter_Ligne + 1, (iter_Colonne * 2) + 2,
 						   &CONTENU_CASE_CHAR(plateau->cases[iter_Colonne][iter_Ligne].contenu));
 			} else {

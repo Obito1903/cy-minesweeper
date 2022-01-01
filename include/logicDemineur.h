@@ -74,4 +74,17 @@ plateauDemineur *initPlateauDemineur(int i_nbLignes, int i_nbColonnes, int i_nbM
  */
 void freePlateauDemineur(plateauDemineur *plateau);
 
+/**
+ *  @fn void decourvreCase (plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sat 01 Jan 2022 23:53
+ *
+ *  @brief
+ *
+ *  @param[in out] plateau : Plateau de jeu
+ *
+ */
+void decourvreCase(plateauDemineur *plateau, int posX, int posY);
+
 #endif // __LOGICDEMINEUR_H__

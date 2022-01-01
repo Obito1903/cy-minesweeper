@@ -28,17 +28,61 @@ int main(int argc, char const *argv[])
 {
 	initAffichage();
 
-	plateauDemineur *plateau = initPlateauDemineur(10, 20, 2001);
-	int				 starty	 = (LINES - plateau->nbLignes) / 2;	 /* Calculating for a center placement */
-	int				 startx	 = (COLS - plateau->nbColonnes) / 2; /* of the window		*/
+	plateauDemineur *plateau = initPlateauDemineur(10, 20, 10);
+	int				 starty	 = (LINES - plateau->nbLignes) / 2;		   /* Calculating for a center placement */
+	int				 startx	 = (COLS - (plateau->nbColonnes * 2)) / 2; /* of the window		*/
 	int				 ch;
-	plateau->xRay = TRUE;
+	int				 running = TRUE;
+	plateau->xRay			 = FALSE;
+	MEVENT event;
 	printw("Press F1 to exit");
 	refresh();
 	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);
 
 	updateFenetrePlateau(my_win, plateau);
-	getchar();
+	mousemask(ALL_MOUSE_EVENTS, NULL);
+	while (running) {
+		ch = getch();
+		switch (ch) {
+			case KEY_UP:
+				plateau->posCurseur.y--;
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_DOWN:
+				plateau->posCurseur.y++;
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_LEFT:
+				plateau->posCurseur.x--;
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_RIGHT:
+				plateau->posCurseur.x++;
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case ' ':
+				decourvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
+				plateau->posCurseur.affiche = FALSE;
+				break;
+			case KEY_MOUSE:
+				if (getmouse(&event) == OK) { /* When the user clicks left mouse button */
+					if (event.bstate & BUTTON1_CLICKED) {
+						// printw("x:%d y:%d", event.x - startx - 1, event.y - starty - 1);
+						plateau->posCurseur.x		= (event.x - startx) / 2 - 1;
+						plateau->posCurseur.y		= event.y - starty - 1;
+						plateau->posCurseur.affiche = FALSE;
+						decourvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
+						refresh();
+					}
+				}
+				break;
+			default:
+				break;
+		}
+		// printw("%d", ch);
+		updateFenetrePlateau(my_win, plateau);
+		// printw("%d", ch);
+	}
 
 	endwin();
 	return (0);
