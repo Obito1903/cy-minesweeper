@@ -4,3 +4,4 @@ Docs/Doxygen
 *.out
 *.zip
 bin/*
+samTest

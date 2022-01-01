@@ -331,6 +331,19 @@ void pitab1d_echangeVal(i_tab1D *pitab1d_tab, unsigned int ui_indice1, unsigned 
 void pitab1d_rempliTabRandom(i_tab1D *pitab1d_tab, int i_min, int i_max);
 
 /**
+ *  @fn void pitab1d_melangeTab (i_tab1D *pitab1d_tab)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Fri 31 Dec 2021 14:54
+ *
+ *  @brief Mélange un tableau 1D d'entier
+ *
+ *  @param[in out] pitab1d_tab : Tableau à mélanger
+ *
+ */
+void pitab1d_melangeTab(i_tab1D *pitab1d_tab);
+
+/**
  *  @fn void pitab1d_free (i_tab1D *pitab1d_tab)
  *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
  *  @version 0.1
@@ -343,6 +356,26 @@ void pitab1d_rempliTabRandom(i_tab1D *pitab1d_tab, int i_min, int i_max);
  *  @remark Necessite d'aciver la fonctionalité FEATURES_TAB1D_INT
  */
 void pitab1d_free(i_tab1D *pitab1d_tab);
+
+	#if defined(TEST_SAMLIB_TAB1D)
+		#include <time.h>
+
+/**
+ *  @fn int main (int argc, char const *argv[])
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Fri 31 Dec 2021 14:56
+ *
+ *  @brief Fonction Principale de test des tableau 1D int
+ *
+ *  @param[in] argc Nombre d'arguments
+ *  @param[in] *argv[] Tableau d'arguments
+ *  @return EXIT_SUCCESS : le programme doit se terminer normalement
+ *
+ */
+int main(int argc, char const *argv[]);
+
+	#endif /* TEST_SAMLIB_TAB1D */
 
 #endif // __TAB1D_INT__
 

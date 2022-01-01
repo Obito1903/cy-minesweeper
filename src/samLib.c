@@ -158,9 +158,38 @@ void pitab1d_rempliTabRandom(i_tab1D *pitab1d_tab, int i_min, int i_max)
 	}
 }
 
+void pitab1d_melangeTab(i_tab1D *pitab1d_tab)
+{
+	int i;
+	for (i = 0; i < pitab1d_tab->taille; i++) {
+		pitab1d_echangeVal(pitab1d_tab, i, i_rand_entre(0, pitab1d_tab->taille - 1));
+	}
+}
+
 void pitab1d_free(i_tab1D *pitab1d_tab)
 {
 	free(pitab1d_tab->data);
 }
+
+	#if defined(TEST_SAMLIB_TAB1D)
+
+int main(int argc, char const *argv[])
+{
+	srand(time(NULL));
+	i_tab1D tab1d;
+	pitab1d_creeTab(&tab1d, 50, 0);
+	int int_i;
+	for (int_i = 0; int_i < 50; int_i++) {
+		tab1d.data[int_i] = int_i;
+	}
+	printf("Tableau avant mélange :\n");
+	pitab1d_afficheTab(&tab1d);
+	pitab1d_melangeTab(&tab1d);
+	printf("Tableau après mélange :\n");
+	pitab1d_afficheTab(&tab1d);
+	return (0);
+}
+
+	#endif
 
 #endif // __TAB1D_INT__

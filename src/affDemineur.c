@@ -101,8 +101,7 @@ void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau)
 	for (iter_Colonne = 0; iter_Colonne < plateau->nbColonnes; iter_Colonne++) {
 		int iter_Ligne;
 		for (iter_Ligne = 0; iter_Ligne < plateau->nbLignes; iter_Ligne++) {
-			if (plateau->cases[iter_Colonne][iter_Ligne].etat == DECOUVERTE) {
-
+			if ((plateau->cases[iter_Colonne][iter_Ligne].etat == DECOUVERTE) || (plateau->xRay == TRUE)) {
 				mvwadd_wch(winPlateau, iter_Ligne + 1, (iter_Colonne * 2) + 2,
 						   &CONTENU_CASE_CHAR(plateau->cases[iter_Colonne][iter_Ligne].contenu));
 			} else {

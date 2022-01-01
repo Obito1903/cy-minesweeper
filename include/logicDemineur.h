@@ -16,6 +16,34 @@
 
 #include <demineur.h>
 #include <samLib.h>
+#include <time.h>
+
+/**
+ *  @fn void placeBombes (plateauDemineur *plateau, int i_nbMines)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Fri 31 Dec 2021 14:32
+ *
+ *  @brief Place les mines sur le plateau de jeu
+ *
+ *  @param[in out] plateau : Plateau de jeu
+ *  @param[in] i_nbMines : Nombre de mines à placer
+ *
+ */
+void placeBombes(plateauDemineur *plateau, int i_nbMines);
+
+/**
+ *  @fn void placeNombres (plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sat 01 Jan 2022 18:53
+ *
+ *  @brief Calcule les nombres de cases adjacentes contenant une bombes à chaque case du plateau
+ *
+ *  @param[in out] plateau : Plateau de jeu
+ *
+ */
+void placeNombres(plateauDemineur *plateau);
 
 /**
  *  @fn plateauDemineur* initPlateauDemineur (int i_nbLignes, int i_nbColonnes, int i_nbMines)

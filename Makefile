@@ -13,7 +13,7 @@ CC	 = gcc
 FLAGS	 = -g -c -Wall -Iinclude
 LFLAGS	 = -lncursesw
 
-FEATURES = NCURSES_WIDECHAR=1 _XOPEN_SOURCE=700
+FEATURES = NCURSES_WIDECHAR=1 _XOPEN_SOURCE=700 FEATURES_TAB1D_INT
 FEATURES_CC = $(shell echo $(FEATURES) | sed 's/[^ ]* */-D&/g')
 
 # Variable specifique a la compilation

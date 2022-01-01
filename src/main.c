@@ -28,30 +28,11 @@ int main(int argc, char const *argv[])
 {
 	initAffichage();
 
-	plateauDemineur *plateau = initPlateauDemineur(4, 4, 10);
+	plateauDemineur *plateau = initPlateauDemineur(10, 20, 2001);
 	int				 starty	 = (LINES - plateau->nbLignes) / 2;	 /* Calculating for a center placement */
 	int				 startx	 = (COLS - plateau->nbColonnes) / 2; /* of the window		*/
 	int				 ch;
-	plateau->cases[0][0].etat	 = DRAPEAU;
-	plateau->cases[1][0].etat	 = DECOUVERTE;
-	plateau->cases[1][0].contenu = BOMBE;
-	plateau->cases[2][0].etat	 = DECOUVERTE;
-	plateau->cases[2][0].contenu = NB1;
-	plateau->cases[3][0].etat	 = DECOUVERTE;
-	plateau->cases[3][0].contenu = NB2;
-	plateau->cases[0][1].etat	 = DECOUVERTE;
-	plateau->cases[0][1].contenu = NB3;
-	plateau->cases[1][1].etat	 = DECOUVERTE;
-	plateau->cases[1][1].contenu = NB4;
-	plateau->cases[2][1].etat	 = DECOUVERTE;
-	plateau->cases[2][1].contenu = NB5;
-	plateau->cases[3][1].etat	 = DECOUVERTE;
-	plateau->cases[3][1].contenu = NB6;
-	plateau->cases[0][2].etat	 = DECOUVERTE;
-	plateau->cases[0][2].contenu = NB7;
-	plateau->cases[1][2].etat	 = DECOUVERTE;
-	plateau->cases[1][2].contenu = NB8;
-
+	plateau->xRay = TRUE;
 	printw("Press F1 to exit");
 	refresh();
 	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);

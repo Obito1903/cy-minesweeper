@@ -97,6 +97,10 @@ typedef struct
 	int nbColonnes;
 	/*! Nombre de bombes sur le plateau */
 	int nbMines;
+	/*! Nombre de bombes détruites */
+	int nbDrapeaux;
+	/*! XRay Découvre le plateau*/
+	int xRay;
 } plateauDemineur;
 
 #endif // __DEMINEUR_H__
