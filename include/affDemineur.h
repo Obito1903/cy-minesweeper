@@ -55,6 +55,10 @@ extern const cchar_t etatCaseChar[3];
  */
 #define ETAT_CASE_CHAR(CONTENU) etatCaseChar[CONTENU + 1]
 
+/**
+ * @def CURSEUR
+ * Caractère représentant le curseur.
+ */
 #define CURSEUR \
 	(cchar_t) { .attr = A_BLINK, .chars = {L'⸰'}, .ext_color = COULEUR_CURSEUR }
 
