@@ -18,7 +18,7 @@ make run
 make docs
 ```
 
-La documentation sera généré dans Docs/Doxygen
+Elle est aussi accessible a cette addresse [http://programation-c-ing1.rodriguess.me/tp8](http://programation-c-ing1.rodriguess.me/tp8)
 
 ## zip
 
