@@ -75,7 +75,7 @@ plateauDemineur *initPlateauDemineur(int i_nbLignes, int i_nbColonnes, int i_nbM
 void freePlateauDemineur(plateauDemineur *plateau);
 
 /**
- *  @fn void decourvreCase (plateauDemineur *plateau)
+ *  @fn void decouvreCase(plateauDemineur *plateau, int posX, int posY)
  *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
  *  @version 0.1
  *  @date Sat 01 Jan 2022 23:53
@@ -83,8 +83,52 @@ void freePlateauDemineur(plateauDemineur *plateau);
  *  @brief
  *
  *  @param[in out] plateau : Plateau de jeu
+ *  @param[in] posX : Position en X de la case à découvrir
+ *  @param[in] posY : Position en Y de la case à découvrir
  *
  */
-void decourvreCase(plateauDemineur *plateau, int posX, int posY);
+void decouvreCase(plateauDemineur *plateau, int posX, int posY);
+
+/**
+ *  @fn int deplaceDurseur (plateauDemineur *plateau, int posX, int posY)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sun 02 Jan 2022 00:37
+ *
+ *  @brief Deplace le curseur du plateau en s'assurant que la case est accessible
+ *
+ *  @param[in out] plateau : le plateau du jeu
+ *  @param[in] posX : la nouvelle position en X du curseur
+ *  @param[in] posY : la nouvelle position en Y du curseur
+ *  @return FALSE si la case est inaccessible, TRUE sinon
+ *
+ */
+int deplaceDurseur(plateauDemineur *plateau, int posX, int posY);
+
+/**
+ *  @fn int validePosDrapeaux (plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sun 02 Jan 2022 00:58
+ *
+ *  @brief Verifie que tous les drapeaux son bien au dessus d'une bombe
+ *
+ *  @param[in] plateau : Plateau de jeu
+ *  @return TRUE si tous les drapeaux sont au dessus d'une bombe, FALSE sinon
+ *
+ */
+int validePosDrapeaux(plateauDemineur *plateau);
+
+/**
+ *  @fn void aGagne (plateauDemineur *plateau)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sun 02 Jan 2022 00:50
+ *
+ *  @brief Determine si le joueur a gagné
+ *
+ *  @param[in out] plateau : Plateau du jeu
+ */
+void aGagne(plateauDemineur *plateau);
 
 #endif // __LOGICDEMINEUR_H__
