@@ -53,6 +53,17 @@ typedef enum
 } etatCase;
 
 /**
+ * @enum modesCurseurs
+ * Liste des differents mode
+ */
+typedef enum
+{
+	/*!  */
+	MODE_DRAPEAU,
+	MODE_DECOUVRE
+} modesCurseurs;
+
+/**
  * @struct casePlateau
  * Structure représentant une case du plateau de jeu
  */
@@ -76,6 +87,8 @@ typedef struct
 	int y;
 	/*! Etat du curseur */
 	int affiche;
+	/*! Mode du curseur */
+	modesCurseurs mode;
 } curseur;
 
 /**

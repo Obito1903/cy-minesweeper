@@ -63,6 +63,14 @@ int main(int argc, char const *argv[])
 				decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
 				plateau->posCurseur.affiche = FALSE;
 				break;
+			case 'd':
+				if (plateau->posCurseur.mode == MODE_DECOUVRE) {
+					plateau->posCurseur.mode = MODE_DRAPEAU;
+				} else {
+					plateau->posCurseur.mode = MODE_DECOUVRE;
+				}
+				printw("%d", plateau->posCurseur.mode);
+				break;
 			case KEY_MOUSE:
 				if (getmouse(&event) == OK) {
 					if (event.bstate & BUTTON1_CLICKED) {
@@ -80,6 +88,7 @@ int main(int argc, char const *argv[])
 		aGagne(plateau);
 		updateFenetrePlateau(my_win, plateau);
 	}
+	freePlateauDemineur(plateau);
 	printw("Partie terminé!");
 	getch();
 	endwin();

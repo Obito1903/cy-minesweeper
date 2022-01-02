@@ -75,6 +75,7 @@ plateauDemineur *initPlateauDemineur(int i_nbLignes, int i_nbColonnes, int i_nbM
 	plateau->posCurseur.affiche = TRUE;
 	plateau->posCurseur.x		= 1;
 	plateau->posCurseur.y		= 2;
+	plateau->posCurseur.mode	= 1;
 
 	plateau->cases = (casePlateau **)malloc(sizeof(casePlateau *) * i_nbColonnes);
 	CHECK_PRINT_ERR(plateau->cases == NULL, ERREUR_ALLOCATION_MEMOIRE, "Erreur d'allocation mémoire");
@@ -106,9 +107,19 @@ void decouvreCase(plateauDemineur *plateau, int posX, int posY)
 {
 	int i_vectX;
 	int i_vectY;
-	if ((plateau->cases[posX][posY].etat != DECOUVERTE)) {
+	if (plateau->posCurseur.mode == MODE_DRAPEAU) {
+		if (plateau->cases[posX][posY].etat == CACHE) {
+			plateau->cases[posX][posY].etat = DRAPEAU;
+			plateau->nbDrapeaux++;
+		} else if (plateau->cases[posX][posY].etat == DRAPEAU) {
+			plateau->cases[posX][posY].etat = CACHE;
+			plateau->nbDrapeaux--;
+		}
+	} else if ((plateau->cases[posX][posY].etat != DECOUVERTE)) {
 		plateau->cases[posX][posY].etat = DECOUVERTE;
-		if (plateau->cases[posX][posY].contenu == VIDE) {
+		if (plateau->cases[posX][posY].contenu == BOMBE) {
+			plateau->etat = -1;
+		} else if (plateau->cases[posX][posY].contenu == VIDE) {
 			for (i_vectX = -1; i_vectX <= 1; i_vectX++) {
 				for (i_vectY = -1; i_vectY <= 1; i_vectY++) {
 					if ((posX + i_vectX >= 0) && (posX + i_vectX < plateau->nbColonnes) && (posY + i_vectY >= 0) &&
@@ -117,8 +128,6 @@ void decouvreCase(plateauDemineur *plateau, int posX, int posY)
 					}
 				}
 			}
-		} else if (plateau->cases[posX][posY].contenu == BOMBE) {
-			plateau->etat = -1;
 		}
 	}
 }
@@ -158,9 +167,8 @@ int validePosDrapeaux(plateauDemineur *plateau)
 
 void aGagne(plateauDemineur *plateau)
 {
+	printw("|%d-%d", plateau->nbMines == plateau->nbDrapeaux, validePosDrapeaux(plateau) == TRUE);
 	if ((plateau->nbMines == plateau->nbDrapeaux) && (validePosDrapeaux(plateau) == TRUE)) {
-		plateau->etat = TRUE;
-	} else {
-		plateau->etat = FALSE;
+		plateau->etat = 1;
 	}
 }
