@@ -17,6 +17,7 @@
 
 #include <ncurses.h>
 #include <locale.h>
+#include <logicDemineur.h>
 #include "demineur.h"
 #include "samLib.h"
 
@@ -31,6 +32,12 @@
  *  Code d'erreur en cas de problème lors de l'initialisation des couleurs.
  */
 #define ERREUR_INIT_COULEUR 23
+
+/**
+ * @def ERREUR_INIT_COULEUR
+ *  Code d'erreur en cas de plateau plus grand que la fenetre du terminal.
+ */
+#define ERREUR_TAILLE_PLATEAU -24
 
 /**
  * @brief Tableau contenant les caractères associés aux différents contenus d'une case
@@ -61,6 +68,16 @@ extern const cchar_t etatCaseChar[3];
  */
 #define CURSEUR \
 	(cchar_t) { .attr = A_BLINK, .chars = {L'⸰'}, .ext_color = COULEUR_CURSEUR }
+
+/**
+ * @def CHAR_MODE_DRAPEAU(MODE)
+ *
+ * @brief Retourne le carractère associé au mode de drapeau.
+ *
+ * @param MODE : Mode de curseur
+ * @return Le caractère associé au mode de curseur
+ */
+#define CHAR_MODE_DRAPEAU(MODE) (MODE == MODE_DRAPEAU ? 'D' : 'X')
 
 /**
  * @enum couleurDemineur
@@ -151,5 +168,20 @@ void detruitWinPlateau(WINDOW *winPlateau);
  *
  */
 void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau);
+
+/**
+ *  @fn void demarreJeux (int nbLignes, int nbColonnes, int nbMines)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Sun 02 Jan 2022 18:57
+ *
+ *  @brief Demarre la partie de demineur
+ *
+ *  @param[in] nbLignes : Nombre de lignes du plateau
+ *  @param[in] nbColonnes : Nombre de colonnes du plateau
+ *  @param[in] nbMines : Nombre de mines sur le plateau
+ *
+ */
+void demarreJeux(int nbLignes, int nbColonnes, int nbMines);
 
 #endif // __AFFDEMINEUR_H__

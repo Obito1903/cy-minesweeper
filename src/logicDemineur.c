@@ -167,7 +167,6 @@ int validePosDrapeaux(plateauDemineur *plateau)
 
 void aGagne(plateauDemineur *plateau)
 {
-	printw("|%d-%d", plateau->nbMines == plateau->nbDrapeaux, validePosDrapeaux(plateau) == TRUE);
 	if ((plateau->nbMines == plateau->nbDrapeaux) && (validePosDrapeaux(plateau) == TRUE)) {
 		plateau->etat = 1;
 	}

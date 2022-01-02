@@ -80,7 +80,7 @@ void initCouleurs(void)
 WINDOW *creeWinPlateau(plateauDemineur *plateau, int i_x, int i_y)
 {
 	WINDOW *winPlateau; // Variable de retour
-
+	CHECK_PRINT_ERR(((plateau->nbLignes + 2) > LINES) || (((plateau->nbColonnes * 2) + 3) > COLS), ERREUR_TAILLE_PLATEAU , "Le plateau est plus grand que la fenetre.");
 	winPlateau = newwin(plateau->nbLignes + 2, (plateau->nbColonnes * 2) + 3, i_y, i_x);
 	box(winPlateau, 0, 0);
 	keypad(winPlateau, TRUE);
@@ -116,6 +116,84 @@ void updateFenetrePlateau(WINDOW *winPlateau, plateauDemineur *plateau)
 			}
 		}
 	}
+	mvprintw(((LINES + plateau->nbLignes) / 2) + 2, (COLS - (plateau->nbColonnes * 2)) / 2, "Mines : %d/%d | Mode : %c ",
+			 plateau->nbDrapeaux, plateau->nbMines, CHAR_MODE_DRAPEAU(plateau->posCurseur.mode));
 
 	wrefresh(winPlateau);
+}
+
+void demarreJeux(int nbLignes, int nbColonnes, int nbMines)
+{
+	initAffichage();
+
+	plateauDemineur *plateau = initPlateauDemineur(nbLignes, nbColonnes, nbMines);
+	int				 starty	 = (LINES - plateau->nbLignes) / 2;		   /* Calculating for a center placement */
+	int				 startx	 = (COLS - (plateau->nbColonnes * 2)) / 2; /* of the window		*/
+	int				 ch;
+	plateau->xRay = FALSE;
+	MEVENT event;
+	printw("Espace/Clique Souris pour découvrir, Flèches pour déplacer");
+	refresh();
+	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);
+
+	updateFenetrePlateau(my_win, plateau);
+	mousemask(ALL_MOUSE_EVENTS, NULL);
+	while (plateau->etat == 0) {
+		ch = getch();
+		switch (ch) {
+			case KEY_UP:
+				deplaceDurseur(plateau, plateau->posCurseur.x, plateau->posCurseur.y - 1);
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_DOWN:
+				deplaceDurseur(plateau, plateau->posCurseur.x, plateau->posCurseur.y + 1);
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_LEFT:
+				deplaceDurseur(plateau, plateau->posCurseur.x - 1, plateau->posCurseur.y);
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case KEY_RIGHT:
+				deplaceDurseur(plateau, plateau->posCurseur.x + 1, plateau->posCurseur.y);
+				plateau->posCurseur.affiche = TRUE;
+				break;
+			case ' ':
+				decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
+				plateau->posCurseur.affiche = FALSE;
+				break;
+			case 'd':
+				if (plateau->posCurseur.mode == MODE_DECOUVRE) {
+					plateau->posCurseur.mode = MODE_DRAPEAU;
+				} else {
+					plateau->posCurseur.mode = MODE_DECOUVRE;
+				}
+				printw("%d", plateau->posCurseur.mode);
+				break;
+			case KEY_MOUSE:
+				if (getmouse(&event) == OK) {
+					if (event.bstate & BUTTON1_CLICKED) {
+						if (deplaceDurseur(plateau, (event.x - startx) / 2 - 1, event.y - starty - 1)) {
+							plateau->posCurseur.affiche = FALSE;
+							decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
+						}
+					} else if (event.bstate & BUTTON2_CLICKED) {
+						if (deplaceDurseur(plateau, (event.x - startx) / 2 - 1, event.y - starty - 1)) {
+							plateau->posCurseur.affiche = FALSE;
+							plateau->posCurseur.mode	= MODE_DRAPEAU;
+							decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
+							plateau->posCurseur.mode = MODE_DECOUVRE;
+						}
+					}
+				}
+				break;
+			default:
+				break;
+		}
+		aGagne(plateau);
+		updateFenetrePlateau(my_win, plateau);
+	}
+	freePlateauDemineur(plateau);
+	printw("Partie terminé!");
+	getch();
+	endwin();
 }

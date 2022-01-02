@@ -8,7 +8,25 @@
  */
 
 #include <affDemineur.h>
-#include <logicDemineur.h>
+#include <string.h>
+
+/**
+ *  @fn void afficheAide (void)
+ *  @author Samuel Rodrigues <samuel.rodrigues@eisti.eu>
+ *  @version 0.1
+ *  @date Thu 09 Dec 2021 12:34
+ *
+ *  @brief Affiche l'aide d'une fonction
+ */
+void afficheAide(void)
+{
+	printf("Aide du TP9 - Demineur - Rodrigues Samuel\n"
+		   "Utilisation: TP9 [options]\n"
+		   "	Les options sont:\n"
+		   "	-H <Hauteur du plateau>\n"
+		   "	-L <Longueur du plateau>\n"
+		   "	-M <Nombre de mines>\n");
+}
 
 /**
  *
@@ -26,71 +44,31 @@
  */
 int main(int argc, char const *argv[])
 {
-	initAffichage();
-
-	plateauDemineur *plateau = initPlateauDemineur(10, 20, 10);
-	int				 starty	 = (LINES - plateau->nbLignes) / 2;		   /* Calculating for a center placement */
-	int				 startx	 = (COLS - (plateau->nbColonnes * 2)) / 2; /* of the window		*/
-	int				 ch;
-	plateau->xRay = FALSE;
-	MEVENT event;
-	printw("Espace/Clique Souris pour découvrir, Flèches pour déplacer");
-	refresh();
-	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);
-
-	updateFenetrePlateau(my_win, plateau);
-	mousemask(ALL_MOUSE_EVENTS, NULL);
-	while (plateau->etat == 0) {
-		ch = getch();
-		switch (ch) {
-			case KEY_UP:
-				deplaceDurseur(plateau, plateau->posCurseur.x, plateau->posCurseur.y - 1);
-				plateau->posCurseur.affiche = TRUE;
-				break;
-			case KEY_DOWN:
-				deplaceDurseur(plateau, plateau->posCurseur.x, plateau->posCurseur.y + 1);
-				plateau->posCurseur.affiche = TRUE;
-				break;
-			case KEY_LEFT:
-				deplaceDurseur(plateau, plateau->posCurseur.x - 1, plateau->posCurseur.y);
-				plateau->posCurseur.affiche = TRUE;
-				break;
-			case KEY_RIGHT:
-				deplaceDurseur(plateau, plateau->posCurseur.x + 1, plateau->posCurseur.y);
-				plateau->posCurseur.affiche = TRUE;
-				break;
-			case ' ':
-				decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
-				plateau->posCurseur.affiche = FALSE;
-				break;
-			case 'd':
-				if (plateau->posCurseur.mode == MODE_DECOUVRE) {
-					plateau->posCurseur.mode = MODE_DRAPEAU;
-				} else {
-					plateau->posCurseur.mode = MODE_DECOUVRE;
-				}
-				printw("%d", plateau->posCurseur.mode);
-				break;
-			case KEY_MOUSE:
-				if (getmouse(&event) == OK) {
-					if (event.bstate & BUTTON1_CLICKED) {
-						if (deplaceDurseur(plateau, (event.x - startx) / 2 - 1, event.y - starty - 1)) {
-							plateau->posCurseur.affiche = FALSE;
-							decouvreCase(plateau, plateau->posCurseur.x, plateau->posCurseur.y);
-							refresh();
-						}
-					}
-				}
-				break;
-			default:
-				break;
+	int iter_arg   = 1;
+	int nbLignes   = 10;
+	int nbColonnes = 20;
+	int nbMines	   = 10;
+	while (iter_arg < argc) {
+		printf("%s\n", argv[iter_arg]);
+		if ((strcmp(argv[iter_arg], "-H") == 0) && (argc > iter_arg + 1)) {
+			nbLignes = atoi(argv[iter_arg + 1]);
+			iter_arg += 1;
+		} else if ((strcmp(argv[iter_arg], "-L") == 0) && (argc > iter_arg + 1)) {
+			nbColonnes = atoi(argv[iter_arg + 1]);
+			iter_arg += 1;
+		} else if ((strcmp(argv[iter_arg], "-M") == 0) && (argc > iter_arg + 1)) {
+			nbMines = atoi(argv[iter_arg + 1]);
+			iter_arg += 1;
+		} else if (strcmp(argv[iter_arg], "-h") == 0) {
+			afficheAide();
+		} else {
+			CHECK_PRINT_ERR(1, ERREUR_ARGUMENTS,
+							"L'option specifier n'existe pas."
+							"\nUtiliser l'option -h pour afficher l'aide");
 		}
-		aGagne(plateau);
-		updateFenetrePlateau(my_win, plateau);
+		iter_arg++;
 	}
-	freePlateauDemineur(plateau);
-	printw("Partie terminé!");
-	getch();
-	endwin();
+
+	demarreJeux(nbLignes, nbColonnes, nbMines);
 	return (0);
 }
