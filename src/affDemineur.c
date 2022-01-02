@@ -132,7 +132,7 @@ void demarreJeux(int nbLignes, int nbColonnes, int nbMines)
 	int				 ch;
 	plateau->xRay = FALSE;
 	MEVENT event;
-	printw("Espace/Clique Souris pour découvrir, Flèches pour déplacer");
+	printw("Espace/Clique Souris pour découvrir, Flèches pour déplacer, D pour changer le mode du curseur.");
 	refresh();
 	WINDOW *my_win = creeWinPlateau(plateau, startx, starty);
 

@@ -30,6 +30,25 @@ Si in des arguments n'est pas specifié il sera initialisé a ca valeur par déf
 - `-h`       : Affiche l'aide du programme
 
 
+### Gameplay
+
+|     Caractère     |           Signification            |
+| :---------------: | :--------------------------------: |
+|        `~`        |        Case non découverte         |
+|        `⸰`        |              Curseur               |
+|        `⚑`        |              Drapeau               |
+| `1,2,3,4,5,6,7,8` | Nombre de bombes autour de la case |
+
+
+#### Interactions
+
+|          Touche           |                                Action                                |
+| :-----------------------: | :------------------------------------------------------------------: |
+| `Flèches directionnelles` |                          Deplace le curseur                          |
+|            `D`            |           Change le mode du curseur (Drapeau, Découverte)            |
+|         `Espace`          |    Découvre ou met un Drapeau sur la case la case sous le curseur    |
+|      `Clique gauche`      |      Découvre la case pointé et déplace le curseur à cette case      |
+|     `Clique molette`      | Met un Drapeau sur la case pointé et déplace le curseur à cette case |
 
 
 ## doxygen
