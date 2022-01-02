@@ -34,7 +34,7 @@
 #define ERREUR_INIT_COULEUR 23
 
 /**
- * @def ERREUR_INIT_COULEUR
+ * @def ERREUR_TAILLE_PLATEAU
  *  Code d'erreur en cas de plateau plus grand que la fenetre du terminal.
  */
 #define ERREUR_TAILLE_PLATEAU -24
