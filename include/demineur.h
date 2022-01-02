@@ -117,6 +117,8 @@ typedef struct
 	int xRay;
 	/*! Position du curseur */
 	curseur posCurseur;
+	/*! Etat de la contition de victoire -1 si Perdu, 0 si en cours, 1 si gagné */
+	int etat;
 } plateauDemineur;
 
 #endif // __DEMINEUR_H__

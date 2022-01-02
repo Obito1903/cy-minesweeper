@@ -71,6 +71,7 @@ plateauDemineur *initPlateauDemineur(int i_nbLignes, int i_nbColonnes, int i_nbM
 	plateau->nbMines			= i_nbMines;
 	plateau->nbDrapeaux			= 0;
 	plateau->xRay				= FALSE;
+	plateau->etat				= 0;
 	plateau->posCurseur.affiche = TRUE;
 	plateau->posCurseur.x		= 1;
 	plateau->posCurseur.y		= 2;
@@ -101,7 +102,7 @@ void freePlateauDemineur(plateauDemineur *plateau)
 	free(plateau);
 }
 
-void decourvreCase(plateauDemineur *plateau, int posX, int posY)
+void decouvreCase(plateauDemineur *plateau, int posX, int posY)
 {
 	int i_vectX;
 	int i_vectY;
@@ -112,10 +113,54 @@ void decourvreCase(plateauDemineur *plateau, int posX, int posY)
 				for (i_vectY = -1; i_vectY <= 1; i_vectY++) {
 					if ((posX + i_vectX >= 0) && (posX + i_vectX < plateau->nbColonnes) && (posY + i_vectY >= 0) &&
 						(posY + i_vectY < plateau->nbLignes) && (i_vectX != 0 || i_vectY != 0)) {
-						decourvreCase(plateau, posX + i_vectX, posY + i_vectY);
+						decouvreCase(plateau, posX + i_vectX, posY + i_vectY);
 					}
 				}
 			}
+		} else if (plateau->cases[posX][posY].contenu == BOMBE) {
+			plateau->etat = -1;
 		}
+	}
+}
+
+int deplaceDurseur(plateauDemineur *plateau, int posX, int posY)
+{
+	int err; // Variable de retour
+
+	if ((posX >= 0) && (posX < plateau->nbColonnes) && (posY >= 0) && (posY < plateau->nbLignes)) {
+		plateau->posCurseur.x = posX;
+		plateau->posCurseur.y = posY;
+		err					  = TRUE;
+	} else {
+		err = FALSE;
+	}
+
+	return (err);
+}
+
+int validePosDrapeaux(plateauDemineur *plateau)
+{
+	int retour = TRUE; // Variable de retour
+
+	int i_Colonne;
+	int i_Lignes;
+	for (i_Colonne = 0; i_Colonne < plateau->nbColonnes; i_Colonne++) {
+		for (i_Lignes = 0; i_Lignes < plateau->nbLignes; i_Lignes++) {
+			if ((plateau->cases[i_Colonne][i_Lignes].etat == DRAPEAU) &&
+				(plateau->cases[i_Colonne][i_Lignes].contenu != BOMBE)) {
+				retour = FALSE;
+			}
+		}
+	}
+
+	return (retour);
+}
+
+void aGagne(plateauDemineur *plateau)
+{
+	if ((plateau->nbMines == plateau->nbDrapeaux) && (validePosDrapeaux(plateau) == TRUE)) {
+		plateau->etat = TRUE;
+	} else {
+		plateau->etat = FALSE;
 	}
 }

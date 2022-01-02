@@ -55,7 +55,7 @@ void initCouleurs(void)
 	error = init_color(COULEUR_NB8, 1000, 0, 0);
 	error = init_color(COULEUR_DRAPEAU, 1000, 1000, 1000);
 	error = init_color(COULEUR_CACHE, 1000, 1000, 1000);
-	error = init_color(COULEUR_CURSEUR, 1000, 1000, 1000);
+	error = init_color(COULEUR_CURSEUR, 500, 500, 1000);
 
 	CHECK_PRINT_ERR(error == ERR, ERREUR_INIT_COULEUR, "Impossible d'initialiser une ou plusieurs couleurs.");
 	error = OK;
