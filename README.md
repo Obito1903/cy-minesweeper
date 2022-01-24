@@ -57,7 +57,7 @@ Si in des arguments n'est pas specifié il sera initialisé a ca valeur par déf
 make docs
 ```
 
-Elle est aussi accessible a cette addresse [http://programation-c-ing1.rodriguess.me/tp9](http://programation-c-ing1.rodriguess.me/tp9)
+Elle est aussi accessible a cette addresse [http://cy-tech.rodriguess.me/ing1/programation-c-ing1/tp9/](http://cy-tech.rodriguess.me/ing1/programation-c-ing1/tp9/)
 
 ## zip
 
